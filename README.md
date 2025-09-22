@@ -353,27 +353,27 @@ classDiagram
     }
 
     %% Relationships
-    GameBoard ||--o{ Snake : contains
-    GameBoard ||--o{ Ladder : contains
-    GameEngine ||--o{ Player : manages
-    GameEngine ||--|| GameBoard : uses
-    GameEngine ||--|| Dice : uses
-    GameEngine ||--o{ GameObserver : notifies
-    GameEngine ||--o{ Command : executes
+    GameBoard "1" *-- "many" Snake : contains
+    GameBoard "1" *-- "many" Ladder : contains
+    GameEngine "1" *-- "many" Player : manages
+    GameEngine "1" --> "1" GameBoard : uses
+    GameEngine "1" --> "1" Dice : uses
+    GameEngine "1" *-- "many" GameObserver : notifies
+    GameEngine "1" *-- "many" Command : executes
     
-    Dice ||--|| DiceStrategy : uses
-    DiceStrategy <|.. StandardDice : implements
+    Dice "1" --> "1" DiceStrategy : uses
+    DiceStrategy <|-- StandardDice : implements
     
-    GameObserver <|.. ConsoleGameObserver : implements
+    GameObserver <|-- ConsoleGameObserver : implements
     
-    Command <|.. MovePlayerCommand : implements
-    MovePlayerCommand ||--|| Player : moves
+    Command <|-- MovePlayerCommand : implements
+    MovePlayerCommand "1" --> "1" Player : moves
     
-    GameCLI ||--|| GameEngine : uses
-    SnakeLadderGame ||--|| GameCLI : creates
+    GameCLI "1" --> "1" GameEngine : uses
+    SnakeLadderGame "1" --> "1" GameCLI : creates
     
-    GameComponentFactory ..> Snake : creates
-    GameComponentFactory ..> Ladder : creates
+    GameComponentFactory --> Snake : creates
+    GameComponentFactory --> Ladder : creates
 ```
 
 ## 🤝 Contributing
